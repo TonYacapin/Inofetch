@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Research Abstract Keyword Extractor</title>
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #2980b9;
+            --light-gray: #f5f7fa;
+            --medium-gray: #e1e8ed;
+            --dark-gray: #7f8c8d;
+            --success-color: #27ae60;
+            --warning-color: #e67e22;
+            --danger-color: #e74c3c;
+            --highlight-color: #fff3cd;
+            --highlight-border: #ffeaa7;
+            --border-radius: 6px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,9 +29,10 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--light-gray);
+            color: #333;
+            line-height: 1.6;
             padding: 20px;
         }
 
@@ -26,134 +44,153 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
-            color: white;
+            padding: 20px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: var(--primary-color);
+            font-weight: 600;
         }
 
         .header p {
             font-size: 1.1rem;
-            opacity: 0.9;
+            color: var(--dark-gray);
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .input-section {
+        .card {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 25px;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.3rem;
         }
 
         .abstract-input {
             width: 100%;
             min-height: 200px;
             padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius);
             font-size: 1rem;
             font-family: inherit;
             resize: vertical;
             margin-bottom: 20px;
-            transition: border-color 0.3s ease;
+            transition: var(--transition);
+            line-height: 1.5;
         }
 
         .abstract-input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
         .abstract-input::placeholder {
-            color: #999;
+            color: var(--dark-gray);
         }
 
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: var(--secondary-color);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 25px;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            margin-right: 10px;
-            margin-bottom: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .btn:hover {
+            background-color: var(--accent-color);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
 
         .btn:disabled {
-            background: #ccc;
+            background-color: var(--medium-gray);
+            color: var(--dark-gray);
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background-color: var(--dark-gray);
+        }
+
+        .btn-secondary:hover {
+            background-color: #5d6d7e;
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background-color: var(--success-color);
         }
 
-        .btn-info {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #333;
+        .btn-success:hover {
+            background-color: #219653;
         }
 
-        .keywords-section {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
+        .btn-warning {
+            background-color: var(--warning-color);
         }
 
-        .keywords-header {
+        .btn-warning:hover {
+            background-color: #d35400;
+        }
+
+        .button-group {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
         }
 
         .keywords-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 10px;
             margin-bottom: 20px;
             max-height: 300px;
             overflow-y: auto;
             padding: 10px;
-            border: 2px dashed #e0e0e0;
-            border-radius: 10px;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius);
         }
 
         .keyword-item {
-            background: #f8f9fa;
-            padding: 8px 15px;
+            background: var(--light-gray);
+            padding: 8px 12px;
             border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #e9ecef;
+            border: 1px solid var(--medium-gray);
+            font-size: 0.9rem;
         }
 
         .keyword-text {
             flex: 1;
-            font-size: 0.9rem;
         }
 
         .keyword-remove {
-            background: #ff4757;
+            background: var(--danger-color);
             color: white;
             border: none;
             width: 20px;
@@ -165,6 +202,11 @@
             align-items: center;
             justify-content: center;
             margin-left: 8px;
+            transition: var(--transition);
+        }
+
+        .keyword-remove:hover {
+            background: #c0392b;
         }
 
         .add-keyword {
@@ -176,14 +218,15 @@
         .add-keyword input {
             flex: 1;
             padding: 10px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 25px;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius);
             font-size: 1rem;
         }
 
         .add-keyword input:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
 
         .stats {
@@ -191,9 +234,9 @@
             justify-content: space-around;
             background: white;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
         }
 
         .stat-item {
@@ -201,43 +244,43 @@
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            color: #667eea;
+            color: var(--secondary-color);
         }
 
         .stat-label {
-            color: #666;
+            color: var(--dark-gray);
             font-size: 0.9rem;
         }
 
         .progress-bar {
             width: 100%;
-            height: 10px;
-            background: #f0f0f0;
-            border-radius: 5px;
+            height: 8px;
+            background: var(--medium-gray);
+            border-radius: 4px;
             margin: 20px 0;
             overflow: hidden;
         }
 
         .progress {
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--secondary-color);
             transition: width 0.3s ease;
+            border-radius: 4px;
         }
 
         .loading {
             text-align: center;
             padding: 20px;
-            color: white;
         }
 
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
+            border: 3px solid var(--medium-gray);
+            border-top: 3px solid var(--secondary-color);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
             margin: 0 auto 10px;
         }
@@ -260,14 +303,10 @@
 
         .result-card {
             background: white;
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .result-card:hover {
-            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+            border-left: 4px solid var(--secondary-color);
         }
 
         .result-header {
@@ -276,26 +315,21 @@
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 1px solid var(--medium-gray);
         }
 
         .keyword {
-            font-weight: bold;
-            color: #333;
-            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
         }
 
         .api-type {
-            background: #667eea;
+            background: var(--secondary-color);
             color: white;
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
-        }
-
-        .api-type-cc {
-            background: #ff9ff3;
-            color: #333;
         }
 
         .result-content {
@@ -305,91 +339,204 @@
 
         .cc-codes {
             margin-top: 10px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
         }
 
         .cc-code-item {
-            padding: 8px;
-            margin: 5px 0;
-            background: white;
-            border-radius: 5px;
-            border-left: 4px solid #667eea;
+            padding: 10px;
+            margin: 8px 0;
+            background: var(--light-gray);
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--secondary-color);
         }
 
         .cc-code {
-            font-weight: bold;
-            color: #667eea;
+            font-weight: 600;
+            color: var(--primary-color);
             font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .cc-desc {
             font-size: 0.85rem;
-            color: #666;
+            color: var(--dark-gray);
             margin-top: 4px;
         }
 
         .cc-snippet {
             font-size: 0.8rem;
-            color: #888;
+            color: var(--dark-gray);
             margin-top: 4px;
             font-style: italic;
         }
 
         .relevance-score {
             display: inline-block;
-            background: #4CAF50;
+            background: var(--success-color);
             color: white;
             padding: 2px 8px;
             border-radius: 10px;
             font-size: 0.7rem;
-            margin-left: 8px;
         }
 
         .error {
-            background: #ffebee;
-            color: #c62828;
+            background: #fdeded;
+            color: #5f2120;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             margin: 10px 0;
-            border-left: 4px solid #c62828;
+            border-left: 4px solid var(--danger-color);
+            font-size: 0.9rem;
         }
 
         .success {
-            background: #e8f5e8;
-            color: #2e7d32;
+            background: #edf7ed;
+            color: #1e4620;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: var(--border-radius);
             margin: 10px 0;
-            border-left: 4px solid #2e7d32;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
+            border-left: 4px solid var(--success-color);
+            font-size: 0.9rem;
         }
 
         .filter-controls {
             background: white;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: var(--border-radius);
             margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .filter-controls label {
-            margin-right: 15px;
             font-weight: 500;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .filter-controls select {
+            padding: 6px 10px;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius);
+            background: white;
+        }
+
+        .summary-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .summary-content {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-top: 15px;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .summary-table th {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+        }
+
+        .summary-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .summary-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        .summary-table tr:hover {
+            background-color: #eaf2f8;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 30px;
+            color: var(--dark-gray);
+            font-style: italic;
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Highlighting styles */
+        .highlighted {
+            background-color: var(--highlight-color);
+            border: 1px solid var(--highlight-border);
+            border-radius: 3px;
+            padding: 1px 3px;
+            margin: 0 1px;
+        }
+
+        .highlighted.active {
+            background-color: #ffeb3b;
+            border-color: #fbc02d;
+            font-weight: 600;
+        }
+
+        .abstract-container {
+            position: relative;
+        }
+
+        .highlight-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--light-gray);
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius);
             padding: 5px 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .highlight-toggle:hover {
+            background: var(--medium-gray);
+        }
+
+        /* New styles for highlighted abstract display */
+        .abstract-display {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid var(--medium-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: inherit;
+            line-height: 1.5;
+            background-color: white;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            display: none;
         }
     </style>
 </head>
@@ -397,28 +544,46 @@
     <div class="container">
         <div class="header">
             <h1>Research Abstract Keyword Extractor</h1>
-            <p>Paste your research abstract to automatically extract keywords and fetch API data</p>
+            <p>Extract key terms from research abstracts and retrieve relevant classification codes</p>
         </div>
 
-        <div class="input-section">
-            <h3 style="margin-bottom: 15px; color: #333;">Paste Research Abstract</h3>
-            <textarea 
-                class="abstract-input" 
-                id="abstractInput" 
-                placeholder="Paste your research abstract here... The system will automatically extract key terms, processes, microorganisms, and compounds."
-            ></textarea>
+        <div class="card">
+            <div class="abstract-container">
+                <h3>Research Abstract</h3>
+                <button class="highlight-toggle" id="highlightToggle" onclick="toggleHighlights()">Show Highlights</button>
+                <textarea 
+                    class="abstract-input" 
+                    id="abstractInput" 
+                    placeholder="Paste your research abstract here... The system will automatically extract key terms, processes, microorganisms, and compounds."
+                ></textarea>
+                <div class="abstract-display" id="abstractDisplay"></div>
+            </div>
             
             <div class="button-group">
-                <button class="btn" onclick="extractKeywords()">Extract Keywords</button>
-                <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
-                <button class="btn btn-success" onclick="downloadKeywords()">Download Keywords CSV</button>
-                <button class="btn btn-info" onclick="fetchCCData()">Fetch CC Data Only</button>
+                <button class="btn" onclick="extractKeywords()">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                    Extract Keywords
+                </button>
+                <button class="btn btn-secondary" onclick="clearAll()">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    Clear All
+                </button>
+                <button class="btn btn-success" onclick="downloadKeywords()">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                    Download Keywords CSV
+                </button>
             </div>
         </div>
 
-        <div class="keywords-section" id="keywordsSection" style="display: none;">
+        <div class="card" id="keywordsSection" style="display: none;">
             <div class="keywords-header">
-                <h3 style="color: #333;">Extracted Keywords</h3>
+                <h3>Extracted Keywords</h3>
                 <span id="keywordCount">0 keywords</span>
             </div>
             
@@ -426,12 +591,27 @@
             
             <div class="add-keyword">
                 <input type="text" id="newKeywordInput" placeholder="Add custom keyword..." onkeypress="handleKeyPress(event)">
-                <button class="btn" onclick="addCustomKeyword()">Add Keyword</button>
+                <button class="btn" onclick="addCustomKeyword()">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    Add Keyword
+                </button>
             </div>
 
             <div class="button-group">
-                <button class="btn" id="fetchBtn" onclick="fetchAllData()">Fetch All API Data</button>
-                <button class="btn btn-info" onclick="fetchCCData()">Fetch CC Data Only</button>
+                <button class="btn" id="fetchBtn" onclick="fetchAllData()">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"></path>
+                    </svg>
+                    Fetch All API Data
+                </button>
+                <button class="btn btn-warning" onclick="fetchCCData()">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"></path>
+                    </svg>
+                    Fetch CC Data Only
+                </button>
             </div>
         </div>
 
@@ -480,8 +660,13 @@
         </div>
 
         <div class="results-section" id="resultsSection">
-            <h2 style="color: white; margin-bottom: 20px;">API Results</h2>
+            <h2 class="section-title">API Results</h2>
             <div class="results-grid" id="resultsGrid"></div>
+        </div>
+
+        <div class="summary-section" id="summarySection">
+            <h2 class="section-title">Comprehensive Summary</h2>
+            <div class="summary-content" id="summaryContent"></div>
         </div>
     </div>
 
@@ -490,6 +675,8 @@
         let results = [];
         let ccData = [];
         let allCCData = []; // Store all CC data for filtering
+        let highlightsEnabled = false;
+        let originalAbstract = '';
 
         // Common scientific terms to extract
         const SCIENTIFIC_TERMS = [
@@ -522,6 +709,59 @@
             { name: 'CC Search', url: 'https://cabi-inference2.innodata.com/cabnpweb/api/search-cc?term=' }
         ];
 
+        // Toggle highlighting in abstract
+        function toggleHighlights() {
+            const abstractInput = document.getElementById('abstractInput');
+            const abstractDisplay = document.getElementById('abstractDisplay');
+            const toggleBtn = document.getElementById('highlightToggle');
+            
+            if (highlightsEnabled) {
+                // Remove highlights - show textarea
+                abstractInput.style.display = 'block';
+                abstractDisplay.style.display = 'none';
+                toggleBtn.textContent = 'Show Highlights';
+                highlightsEnabled = false;
+            } else {
+                // Apply highlights - show display div
+                if (keywords.size === 0) {
+                    alert('Please extract keywords first');
+                    return;
+                }
+                originalAbstract = abstractInput.value;
+                applyHighlights();
+                abstractInput.style.display = 'none';
+                abstractDisplay.style.display = 'block';
+                toggleBtn.textContent = 'Remove Highlights';
+                highlightsEnabled = true;
+            }
+        }
+
+        // Apply highlights to abstract
+        function applyHighlights() {
+            const abstractDisplay = document.getElementById('abstractDisplay');
+            let abstractText = originalAbstract;
+            
+            if (keywords.size === 0) {
+                abstractDisplay.innerHTML = abstractText;
+                return;
+            }
+            
+            // Sort keywords by length (longer first) to prevent partial highlighting
+            const sortedKeywords = Array.from(keywords).sort((a, b) => b.length - a.length);
+            
+            // Create a regex pattern to match keywords (case insensitive)
+            const pattern = new RegExp(sortedKeywords.map(keyword => 
+                keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+            ).join('|'), 'gi');
+            
+            // Replace matches with highlighted spans
+            abstractText = abstractText.replace(pattern, match => {
+                return `<span class="highlighted" title="Extracted keyword: ${match}">${match}</span>`;
+            });
+            
+            abstractDisplay.innerHTML = abstractText;
+        }
+
         // Extract keywords from abstract
         function extractKeywords() {
             const abstract = document.getElementById('abstractInput').value.trim();
@@ -529,6 +769,9 @@
                 alert('Please paste a research abstract first');
                 return;
             }
+
+            // Store original abstract
+            originalAbstract = abstract;
 
             // Clear existing keywords
             keywords.clear();
@@ -572,6 +815,9 @@
 
             displayKeywords();
             document.getElementById('keywordsSection').style.display = 'block';
+            
+            // Show highlight toggle button
+            document.getElementById('highlightToggle').style.display = 'block';
         }
 
         // Display keywords in the grid
@@ -593,12 +839,22 @@
 
             document.getElementById('keywordCount').textContent = `${keywords.size} keywords`;
             document.getElementById('totalKeywords').textContent = keywords.size;
+            
+            // Update highlights if they're currently shown
+            if (highlightsEnabled) {
+                applyHighlights();
+            }
         }
 
         // Remove a keyword
         function removeKeyword(keyword) {
             keywords.delete(keyword);
             displayKeywords();
+            
+            // Update highlights if they're currently shown
+            if (highlightsEnabled) {
+                applyHighlights();
+            }
         }
 
         // Add custom keyword
@@ -610,6 +866,11 @@
                 keywords.add(newKeyword);
                 displayKeywords();
                 input.value = '';
+                
+                // Update highlights if they're currently shown
+                if (highlightsEnabled) {
+                    applyHighlights();
+                }
             } else if (keywords.has(newKeyword)) {
                 alert('Keyword already exists!');
             }
@@ -625,12 +886,19 @@
         // Clear all inputs
         function clearAll() {
             document.getElementById('abstractInput').value = '';
+            document.getElementById('abstractDisplay').innerHTML = '';
+            document.getElementById('abstractInput').style.display = 'block';
+            document.getElementById('abstractDisplay').style.display = 'none';
             keywords.clear();
             document.getElementById('keywordsSection').style.display = 'none';
             document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('summarySection').style.display = 'none';
             document.getElementById('stats').style.display = 'none';
             document.getElementById('filterControls').style.display = 'none';
             document.getElementById('newKeywordInput').value = '';
+            document.getElementById('highlightToggle').style.display = 'none';
+            document.getElementById('highlightToggle').textContent = 'Show Highlights';
+            highlightsEnabled = false;
             results = [];
             ccData = [];
             allCCData = [];
@@ -757,6 +1025,7 @@
             }
 
             document.getElementById('loading').style.display = 'none';
+            generateSummary();
         }
 
         // Display CC results
@@ -790,7 +1059,7 @@
                 let cardContent = `
                     <div class="result-header">
                         <div class="keyword">${item.keyword}</div>
-                        <div class="api-type api-type-cc">CC Search</div>
+                        <div class="api-type">CC Search</div>
                     </div>
                     <div class="success">
                         Found ${filteredData.length} relevant CC code(s) for "${item.keyword}"
@@ -851,6 +1120,7 @@
             document.getElementById('fetchBtn').disabled = true;
 
             results = [];
+            ccData = []; // Reset ccData
             const keywordsArray = Array.from(keywords);
             const totalRequests = keywordsArray.length * API_ENDPOINTS.length;
             let completedRequests = 0;
@@ -886,6 +1156,12 @@
                             success: true,
                             data: relevantCCData
                         };
+                        
+                        // Store in ccData for summary generation
+                        ccData.push({
+                            keyword: keyword,
+                            data: result
+                        });
                     } else {
                         result = await fetchApiData(keyword, api);
                     }
@@ -913,6 +1189,7 @@
 
             document.getElementById('loading').style.display = 'none';
             document.getElementById('fetchBtn').disabled = false;
+            generateSummary();
         }
 
         // Display results in the UI
@@ -934,7 +1211,7 @@
                     const isCC = apiResult.name === 'CC Search';
                     cardContent += `
                         <div class="api-result">
-                            <div class="api-type ${isCC ? 'api-type-cc' : ''}">${apiResult.name}</div>
+                            <div class="api-type">${apiResult.name}</div>
                             <div class="result-content">
                     `;
 
@@ -982,6 +1259,107 @@
                 card.innerHTML = cardContent;
                 resultsGrid.appendChild(card);
             });
+        }
+
+        // Generate comprehensive summary
+        function generateSummary() {
+            document.getElementById('summarySection').style.display = 'block';
+            const summaryContent = document.getElementById('summaryContent');
+            
+            // Get all keywords
+            const keywordsArray = Array.from(keywords).sort();
+            
+            // Collect all CC codes with relevance scores
+            const allCCItems = [];
+            
+            // Use ccData array which should be populated by either fetchCCData() or fetchAllData()
+            ccData.forEach(item => {
+                if (item.data && item.data.success && item.data.data) {
+                    item.data.data.forEach(ccItem => {
+                        // Check if this CC code is already in our list
+                        const existingIndex = allCCItems.findIndex(existing => existing.code === ccItem.code);
+                        if (existingIndex === -1) {
+                            // Add new CC code
+                            allCCItems.push({
+                                code: ccItem.code,
+                                desc: ccItem.desc,
+                                keywords: [{
+                                    keyword: item.keyword,
+                                    score: ccItem.relevanceScore
+                                }],
+                                maxScore: ccItem.relevanceScore
+                            });
+                        } else {
+                            // Update existing CC code
+                            allCCItems[existingIndex].keywords.push({
+                                keyword: item.keyword,
+                                score: ccItem.relevanceScore
+                            });
+                            // Update max score if needed
+                            if (ccItem.relevanceScore > allCCItems[existingIndex].maxScore) {
+                                allCCItems[existingIndex].maxScore = ccItem.relevanceScore;
+                            }
+                        }
+                    });
+                }
+            });
+            
+            // Sort CC codes by max relevance score
+            allCCItems.sort((a, b) => b.maxScore - a.maxScore);
+            
+            let summaryHTML = `
+                <h3>Extracted Keywords</h3>
+                <p>Total keywords extracted: <strong>${keywordsArray.length}</strong></p>
+                <div style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 6px;">
+                    ${keywordsArray.join(', ')}
+                </div>
+                
+                <h3 style="margin-top: 25px;">Relevant CC Codes</h3>
+                <p>Total relevant CC codes found: <strong>${allCCItems.length}</strong></p>
+            `;
+            
+            if (allCCItems.length > 0) {
+                summaryHTML += `
+                    <table class="summary-table">
+                        <thead>
+                            <tr>
+                                <th>CC Code</th>
+                                <th>Description</th>
+                                <th>Max Relevance</th>
+                                <th>Matching Keywords</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                allCCItems.forEach(item => {
+                    // Sort keywords by score
+                    item.keywords.sort((a, b) => b.score - a.score);
+                    
+                    // Create keyword list with scores
+                    const keywordList = item.keywords.map(k => 
+                        `${k.keyword} <span class="relevance-score">${k.score}</span>`
+                    ).join(', ');
+                    
+                    summaryHTML += `
+                        <tr>
+                            <td><strong>${item.code}</strong></td>
+                            <td>${item.desc}</td>
+                            <td><span class="relevance-score">${item.maxScore}</span></td>
+                            <td>${keywordList}</td>
+                        </tr>
+                    `;
+                });
+                
+                summaryHTML += `
+                        </tbody>
+                    </table>
+                `;
+            } else {
+                summaryHTML += `<p class="no-results">No relevant CC codes found for the extracted keywords.</p>`;
+            }
+            
+            summaryContent.innerHTML = summaryHTML;
         }
 
         // Auto-extract when user pastes abstract (with slight delay)
