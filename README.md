@@ -160,5 +160,5 @@ You may modify, enhance, and redistribute it with proper attribution.
 **Angel Hamelton O. Yacapin**  
 Software Engineer | MERN Stack Developer  
 
-[GitHub](https://github.com/<your-username>)  
-[Email](mailto:your.email@example.com)
+[GitHub](https://github.com/TonYacapin)  
+[Email](mailto:yacapinton@gmail.com)
